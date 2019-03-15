@@ -8,6 +8,8 @@ import {
 } from '@/models/pageManagerModel';
 import Link from 'umi/link';
 import classnames from 'classnames';
+import { Icon } from 'antd';
+import router from 'umi/router';
 
 interface IProps {
   pageManagerState: IPageManagerState;
@@ -22,6 +24,15 @@ export default class Tab extends React.PureComponent<IProps> {
   static getDerivedStateFromProps(props) {
     return {};
   }
+  onClose = (item: IPageData) => {
+    const { dispatch } = this.props;
+    dispatch({
+      type: `${NAMESPACE_PAGEMANAGERMODEL}/onCloseTab`,
+      payload: item,
+    });
+
+    router.push('/page2');
+  };
 
   render() {
     const {
@@ -38,6 +49,7 @@ export default class Tab extends React.PureComponent<IProps> {
             key={item.url}
           >
             <Link to={item.url}>{item.url}</Link>
+            <Icon type="close" className={styles.close} onClick={() => this.onClose(item)} />
           </div>
         ))}
       </div>

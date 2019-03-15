@@ -18,7 +18,13 @@ export default {
   },
 
   effects: {
-    *handle(action, { put, call, select }) {},
+    *onCloseTab(action, { put, call, select }) {
+      yield put({
+        type: 'onClose',
+        payload: action.payload,
+      });
+      window.g_app.unmodel('page.page3');
+    },
   },
 
   reducers: {
@@ -34,6 +40,14 @@ export default {
         url,
         component,
       };
+    },
+    onClose(state: IPageManagerState, action) {
+      const pageData: IPageData = action.payload;
+      const { openPageList } = state;
+      const index = openPageList.findIndex(item => item.url === pageData.url);
+      openPageList.splice(index, 1);
+
+      state.activedPageData = {};
     },
   },
 };

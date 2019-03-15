@@ -31,6 +31,7 @@ export class PageManager extends React.PureComponent<IProps> {
 
   render() {
     const { activedPageData } = this.props;
+    console.log(1111, activedPageData);
     return <div className={styles.content}>{activedPageData.component}</div>;
   }
 }
